@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
+import br.com.calendario.apieventos.models.Usuario;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -21,6 +22,11 @@ public class JwtUtil {
 
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
+    }
+    
+    public int extractId(String token) {
+    	final Claims claims = extractAllClaims(token);
+        return (int)claims.get("id");
     }
 
     public Date extractExpiration(String token) {
@@ -42,6 +48,12 @@ public class JwtUtil {
     public String generateToken(UserDetails userDetails) {
         Map<String, Object> claims = new HashMap<>();
         return createToken(claims, userDetails.getUsername());
+    }
+    
+    public String generateUserToken(Usuario usuario) {
+    	Map<String, Object> claims = new HashMap<>();
+    	claims.put("id", usuario.getId());
+    	return createToken(claims, usuario.getUsername());
     }
 
     private String createToken(Map<String, Object> claims, String subject) {

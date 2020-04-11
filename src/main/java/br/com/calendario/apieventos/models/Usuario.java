@@ -2,29 +2,34 @@ package br.com.calendario.apieventos.models;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-@Entity
+@Entity(name = "usuarios")
 public class Usuario implements UserDetails, Serializable {
 	
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO, generator="usuario_id_seq")
+	@GeneratedValue(strategy=GenerationType.AUTO, generator="usuarios_id_seq")
 	private int id;
 	
 	@Column(unique = true)
 	private String login;
 	
 	private String senha;
+	
+	@OneToMany
+	private List<Evento> eventos;
 
 	public int getId() {
 		return id;
