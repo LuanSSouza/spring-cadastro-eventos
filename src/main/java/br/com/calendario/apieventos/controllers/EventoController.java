@@ -4,7 +4,9 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,5 +40,12 @@ public class EventoController {
 		Usuario usuario = new Usuario();
 		usuario.setId(jwtUtil.extractId(request.getHeader("Authorization").substring(7)));
 		return ResponseEntity.ok(eventoRepository.findByUsuario(usuario));
+	}
+	
+	@DeleteMapping(value = "{codigo}")
+	public ResponseEntity<?> delete(@PathVariable int codigo) {
+		
+		eventoRepository.deleteByCodigo(codigo);
+		return ResponseEntity.ok("Removido com sucesso!");
 	}
 }
