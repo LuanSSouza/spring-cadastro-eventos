@@ -6,8 +6,6 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 @Entity(name = "eventos")
 public class Evento {
 	
@@ -21,7 +19,6 @@ public class Evento {
 	private Date termino;
 	
 	@ManyToOne
-	@JsonIgnore
 	private Usuario usuario;
 
 	public int getCodigo() {

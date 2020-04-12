@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,6 +18,8 @@ import br.com.calendario.apieventos.models.Usuario;
 import br.com.calendario.apieventos.repository.EventoRepository;
 import br.com.calendario.apieventos.utils.JwtUtil;
 
+
+@CrossOrigin(origins="http://localhost:4200")
 @RestController
 @RequestMapping("/evento")
 public class EventoController {
@@ -35,7 +38,7 @@ public class EventoController {
 	}
 	
 	@GetMapping
-	public ResponseEntity<?> inserir(HttpServletRequest request) {
+	public ResponseEntity<?> listar(HttpServletRequest request) {
 		
 		Usuario usuario = new Usuario();
 		usuario.setId(jwtUtil.extractId(request.getHeader("Authorization").substring(7)));
