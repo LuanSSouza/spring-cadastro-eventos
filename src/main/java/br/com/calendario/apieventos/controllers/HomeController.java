@@ -1,14 +1,10 @@
 package br.com.calendario.apieventos.controllers;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,7 +15,6 @@ import br.com.calendario.apieventos.models.AuthenticationRequest;
 import br.com.calendario.apieventos.models.AuthenticationResponse;
 import br.com.calendario.apieventos.models.Usuario;
 import br.com.calendario.apieventos.repository.UsuarioRepository;
-import br.com.calendario.apieventos.services.MyUserDetailsService;
 import br.com.calendario.apieventos.utils.JwtUtil;
 
 @RestController
@@ -27,9 +22,6 @@ public class HomeController {
 	
 	@Autowired
 	AuthenticationManager authenticationManager;
-	
-	@Autowired
-	private MyUserDetailsService userDetailService;
 	
 	@Autowired
 	private JwtUtil jwtUtil;
@@ -51,7 +43,7 @@ public class HomeController {
 		} catch (BadCredentialsException e) {
 			throw new Exception("INVALID_CREDENTIALS", e);
 		}
-		// final UserDetails userDetails = userDetailService.loadUserByUsername(authenticationRequest.getUsername());
+		
 		Usuario usuario = usuarioRepository.findByLogin(authenticationRequest.getUsername());
 		return ResponseEntity.ok(new AuthenticationResponse(jwtUtil.generateUserToken(usuario)));
 	}
