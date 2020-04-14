@@ -6,8 +6,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import br.com.calendario.apieventos.models.Usuario;
-import br.com.calendario.apieventos.repository.UsuarioRepository;
 import br.com.calendario.apieventos.security.UsuarioSecurity;
 
 @Service

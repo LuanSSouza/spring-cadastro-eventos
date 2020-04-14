@@ -33,4 +33,9 @@ public class UsuarioController {
 		Usuario usuario = usuarioService.findByLogin(authenticationRequest.getUsername());
 		return ResponseEntity.ok(new AuthenticationResponse(authService.generateToken(usuario)));
 	}
+	
+	@PostMapping(value = "/criar")
+	public ResponseEntity<?> criarUsuário(@RequestBody Usuario usuario) throws AuthenticationException {
+		return ResponseEntity.ok(usuarioService.insert(usuario));
+	}
 }

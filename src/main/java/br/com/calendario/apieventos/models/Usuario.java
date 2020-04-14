@@ -16,7 +16,7 @@ public class Usuario {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO, generator="usuarios_id_seq")
-	protected int id;
+	protected Integer id;
 	
 	@Column(unique = true)
 	protected String login;
@@ -34,11 +34,11 @@ public class Usuario {
 		this.id = id;
 	}
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
