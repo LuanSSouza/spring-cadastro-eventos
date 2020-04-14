@@ -1,7 +1,5 @@
 package br.com.calendario.apieventos.models;
 
-import java.io.Serializable;
-import java.util.Collection;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -11,25 +9,30 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity(name = "usuarios")
-public class Usuario implements UserDetails, Serializable {
-	
-	private static final long serialVersionUID = 1L;
+public class Usuario {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO, generator="usuarios_id_seq")
-	private int id;
+	protected int id;
 	
 	@Column(unique = true)
-	private String login;
+	protected String login;
 	
-	private String senha;
+	@JsonIgnore
+	protected String senha;
 	
 	@OneToMany
-	private List<Evento> eventos;
+	protected List<Evento> eventos;
+	
+
+	public Usuario() {}
+
+	public Usuario(int id) {
+		this.id = id;
+	}
 
 	public int getId() {
 		return id;
@@ -53,40 +56,5 @@ public class Usuario implements UserDetails, Serializable {
 
 	public void setSenha(String senha) {
 		this.senha = senha;
-	}
-
-	@Override
-	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return null;
-	}
-
-	@Override
-	public String getPassword() {
-		return this.senha;
-	}
-
-	@Override
-	public String getUsername() {
-		return this.login;
-	}
-
-	@Override
-	public boolean isAccountNonExpired() {
-		return true;
-	}
-
-	@Override
-	public boolean isAccountNonLocked() {
-		return true;
-	}
-
-	@Override
-	public boolean isCredentialsNonExpired() {
-		return true;
-	}
-
-	@Override
-	public boolean isEnabled() {
-		return true;
 	}
 }

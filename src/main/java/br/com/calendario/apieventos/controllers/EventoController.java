@@ -16,33 +16,30 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.calendario.apieventos.error.exception.ObjectNotFoundException;
 import br.com.calendario.apieventos.models.Evento;
 import br.com.calendario.apieventos.models.Usuario;
+import br.com.calendario.apieventos.services.AuthService;
 import br.com.calendario.apieventos.services.EventoService;
-import br.com.calendario.apieventos.utils.JwtUtil;
 
 
-@CrossOrigin(origins="http://localhost:4200")
 @RestController
 @RequestMapping("/evento")
+@CrossOrigin(origins="http://localhost:4200")
 public class EventoController {
 	
 	@Autowired
-	private JwtUtil jwtUtil;
+	private AuthService authService;
 	
 	@Autowired
 	private EventoService eventoService;
 	
 	@PostMapping
 	public ResponseEntity<?> inserir(HttpServletRequest request, @RequestBody Evento evento) {
-		Usuario usuario = new Usuario();
-		usuario.setId(jwtUtil.extractId(request.getHeader("Authorization").substring(7)));
+		Usuario usuario = new Usuario(authService.extractId(request));
 		return ResponseEntity.ok(eventoService.insert(evento, usuario));
 	}
 	
 	@GetMapping
-	public ResponseEntity<?> listar(HttpServletRequest request) throws ObjectNotFoundException {
-		
-		Usuario usuario = new Usuario();
-		usuario.setId(jwtUtil.extractId(request.getHeader("Authorization").substring(7)));
+	public ResponseEntity<?> listar(HttpServletRequest request) throws ObjectNotFoundException {	
+		Usuario usuario = new Usuario(authService.extractId(request));
 		return ResponseEntity.ok(eventoService.findByUsuario(usuario));
 	}
 	
@@ -50,7 +47,6 @@ public class EventoController {
 	public ResponseEntity<?> getByCodigo(HttpServletRequest request, @PathVariable int codigo) throws ObjectNotFoundException {
 		return ResponseEntity.ok(eventoService.findByCodigo(codigo));
 	}
-
 	
 	@DeleteMapping(value = "{codigo}")
 	public ResponseEntity<?> delete(@PathVariable int codigo) throws ObjectNotFoundException {
