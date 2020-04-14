@@ -11,7 +11,7 @@ public interface EventoRepository extends CrudRepository<Evento, String>{
 	
 	Iterable<Evento> findByUsuario(Usuario usuario);
 	
-	Evento findByCodigo(long codigo);
+	Evento findByCodigo(int codigo);
 	
 	void deleteByCodigo(int codigo);
 }

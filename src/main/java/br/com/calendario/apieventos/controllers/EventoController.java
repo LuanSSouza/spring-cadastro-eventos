@@ -31,8 +31,10 @@ public class EventoController {
 	private JwtUtil jwtUtil;
 	
 	@PostMapping
-	public ResponseEntity<?> inserir(@RequestBody Evento evento) {
-		
+	public ResponseEntity<?> inserir(HttpServletRequest request, @RequestBody Evento evento) {
+		Usuario usuario = new Usuario();
+		usuario.setId(jwtUtil.extractId(request.getHeader("Authorization").substring(7)));
+		evento.setUsuario(usuario);
 		eventoRepository.save(evento);
 		return ResponseEntity.ok("Inserido com sucesso!");
 	}
@@ -44,6 +46,12 @@ public class EventoController {
 		usuario.setId(jwtUtil.extractId(request.getHeader("Authorization").substring(7)));
 		return ResponseEntity.ok(eventoRepository.findByUsuario(usuario));
 	}
+	
+	@GetMapping(value = "{codigo}")
+	public ResponseEntity<?> getByCodigo(HttpServletRequest request, @PathVariable int codigo) {
+		return ResponseEntity.ok(eventoRepository.findByCodigo(codigo));
+	}
+
 	
 	@DeleteMapping(value = "{codigo}")
 	public ResponseEntity<?> delete(@PathVariable int codigo) {
