@@ -24,6 +24,9 @@ import br.com.calendario.apieventos.services.MyUserDetailsService;
 public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
 	
 	@Autowired
+	private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
+	
+	@Autowired
 	private MyUserDetailsService myUserDetailsService;
 	
 	@Autowired
@@ -41,7 +44,7 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
 			.antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
 			.anyRequest().authenticated()
 			.and()
-			//.exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and()
+			.exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and()
 			.sessionManagement()
 			.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 		http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);

@@ -13,9 +13,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.calendario.apieventos.error.exception.ObjectNotFoundException;
 import br.com.calendario.apieventos.models.Evento;
 import br.com.calendario.apieventos.models.Usuario;
-import br.com.calendario.apieventos.repository.EventoRepository;
+import br.com.calendario.apieventos.services.EventoService;
 import br.com.calendario.apieventos.utils.JwtUtil;
 
 
@@ -25,38 +26,35 @@ import br.com.calendario.apieventos.utils.JwtUtil;
 public class EventoController {
 	
 	@Autowired
-	private EventoRepository eventoRepository;
+	private JwtUtil jwtUtil;
 	
 	@Autowired
-	private JwtUtil jwtUtil;
+	private EventoService eventoService;
 	
 	@PostMapping
 	public ResponseEntity<?> inserir(HttpServletRequest request, @RequestBody Evento evento) {
 		Usuario usuario = new Usuario();
 		usuario.setId(jwtUtil.extractId(request.getHeader("Authorization").substring(7)));
-		evento.setUsuario(usuario);
-		eventoRepository.save(evento);
-		return ResponseEntity.ok("Inserido com sucesso!");
+		return ResponseEntity.ok(eventoService.insert(evento, usuario));
 	}
 	
 	@GetMapping
-	public ResponseEntity<?> listar(HttpServletRequest request) {
+	public ResponseEntity<?> listar(HttpServletRequest request) throws ObjectNotFoundException {
 		
 		Usuario usuario = new Usuario();
 		usuario.setId(jwtUtil.extractId(request.getHeader("Authorization").substring(7)));
-		return ResponseEntity.ok(eventoRepository.findByUsuario(usuario));
+		return ResponseEntity.ok(eventoService.findByUsuario(usuario));
 	}
 	
 	@GetMapping(value = "{codigo}")
-	public ResponseEntity<?> getByCodigo(HttpServletRequest request, @PathVariable int codigo) {
-		return ResponseEntity.ok(eventoRepository.findByCodigo(codigo));
+	public ResponseEntity<?> getByCodigo(HttpServletRequest request, @PathVariable int codigo) throws ObjectNotFoundException {
+		return ResponseEntity.ok(eventoService.findByCodigo(codigo));
 	}
 
 	
 	@DeleteMapping(value = "{codigo}")
-	public ResponseEntity<?> delete(@PathVariable int codigo) {
-		
-		eventoRepository.deleteByCodigo(codigo);
-		return ResponseEntity.ok("Removido com sucesso!");
+	public ResponseEntity<?> delete(@PathVariable int codigo) throws ObjectNotFoundException {
+		eventoService.delete(codigo);
+		return ResponseEntity.ok("Deletado com sucesso!");
 	}
 }

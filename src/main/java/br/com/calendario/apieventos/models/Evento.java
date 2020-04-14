@@ -3,6 +3,8 @@ package br.com.calendario.apieventos.models;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
@@ -10,7 +12,8 @@ import javax.persistence.ManyToOne;
 public class Evento {
 	
 	@Id
-	private int codigo;
+	@GeneratedValue(strategy=GenerationType.AUTO, generator="evento_codigo_seq")
+	private Integer codigo;
 	
 	private String descricao;
 	
@@ -21,11 +24,11 @@ public class Evento {
 	@ManyToOne
 	private Usuario usuario;
 
-	public int getCodigo() {
+	public Integer getCodigo() {
 		return codigo;
 	}
 
-	public void setCodigo(int codigo) {
+	public void setCodigo(Integer codigo) {
 		this.codigo = codigo;
 	}
 

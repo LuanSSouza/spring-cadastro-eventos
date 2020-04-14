@@ -18,6 +18,9 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import br.com.calendario.apieventos.services.MyUserDetailsService;
 import br.com.calendario.apieventos.utils.JwtUtil;
 import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.MalformedJwtException;
+import io.jsonwebtoken.SignatureException;
+import io.jsonwebtoken.UnsupportedJwtException;
 
 @Component
 public class JwtRequestFilter extends OncePerRequestFilter {
@@ -44,6 +47,8 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 				System.out.println("Unable to get JWT Token");
 			} catch (ExpiredJwtException e) {
 				System.out.println("JWT Token has expired");
+			} catch (MalformedJwtException | SignatureException | UnsupportedJwtException e) {
+		        System.out.println(e.getMessage());
 			}
 		} else {
 			logger.warn("JWT Token does not begin with Bearer String");
