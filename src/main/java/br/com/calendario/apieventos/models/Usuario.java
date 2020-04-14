@@ -8,24 +8,29 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-@Entity(name = "usuarios")
+@Entity(name = "usuario")
 public class Usuario {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO, generator="usuarios_id_seq")
+	@GeneratedValue(strategy=GenerationType.AUTO, generator="usuario_id_seq")
 	protected Integer id;
 	
-	@Column(unique = true)
+	@Column(unique = true, nullable = false)
 	protected String login;
 	
+	@NotNull
 	@JsonIgnore
 	protected String senha;
 	
 	@OneToMany
 	protected List<Evento> eventos;
+	
+	@OneToMany
+	protected List<Convite> convites;
 	
 
 	public Usuario() {}

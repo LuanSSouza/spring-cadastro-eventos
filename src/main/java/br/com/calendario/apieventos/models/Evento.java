@@ -1,28 +1,38 @@
 package br.com.calendario.apieventos.models;
 
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.validation.constraints.NotNull;
 
-@Entity(name = "eventos")
+@Entity(name = "evento")
 public class Evento {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO, generator="evento_codigo_seq")
 	private Integer codigo;
 	
+	@NotNull
 	private String descricao;
 	
+	@NotNull
 	private Date inicio;
 	
+	@NotNull
 	private Date termino;
 	
 	@ManyToOne
 	private Usuario usuario;
+	
+	@OneToMany(cascade = CascadeType.REMOVE, orphanRemoval = true)
+	protected List<Convite> convites;
 
 	public Integer getCodigo() {
 		return codigo;
