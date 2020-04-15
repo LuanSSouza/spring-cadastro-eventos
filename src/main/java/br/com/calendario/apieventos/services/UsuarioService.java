@@ -30,6 +30,10 @@ public class UsuarioService {
 		return repository.findByLogin(login);
 	}
 	
+	public Iterable<Usuario> findAll() {
+		return repository.findAll();
+	}
+	
 	public UsuarioSecurity findUsuarioSecurityByLogin(String login) {
 		Usuario usuario = repository.findByLogin(login);
 		return new UsuarioSecurity(usuario.getId(), usuario.getLogin(), usuario.getSenha());

@@ -26,6 +26,9 @@ public class EventoService {
 	
 	public Evento update(Evento evento) throws ObjectNotFoundException {
 		Evento obj = findByCodigo(evento.getCodigo());
+		obj.setDescricao(evento.getDescricao());
+		obj.setInicio(evento.getInicio());
+		obj.setTermino(evento.getTermino());
 		return repository.save(obj);
 	}
 	

@@ -3,7 +3,6 @@ package br.com.calendario.apieventos.models;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -31,7 +30,7 @@ public class Evento {
 	@ManyToOne
 	private Usuario usuario;
 	
-	@OneToMany(cascade = CascadeType.REMOVE, orphanRemoval = true)
+	@OneToMany
 	protected List<Convite> convites;
 
 	public Integer getCodigo() {
@@ -73,5 +72,12 @@ public class Evento {
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
 	}
-	
+
+	public List<Convite> getConvites() {
+		return convites;
+	}
+
+	public void setConvites(List<Convite> convites) {
+		this.convites = convites;
+	}
 }
