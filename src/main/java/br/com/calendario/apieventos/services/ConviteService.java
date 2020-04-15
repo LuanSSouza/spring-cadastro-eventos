@@ -36,7 +36,7 @@ public class ConviteService {
 	}
 	
 	public List<Convite> findByEvento(Evento evento) throws ObjectNotFoundException {
-		List<Convite> convites = repository.findByEvento(evento);
+		List<Convite> convites =  repository.findByEvento(evento);
 		if (convites.isEmpty()) throw new ObjectNotFoundException("Nenhum evento encotrado");
 		return convites;
 	}

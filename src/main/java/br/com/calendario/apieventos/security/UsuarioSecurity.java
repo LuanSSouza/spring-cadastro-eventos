@@ -20,6 +20,8 @@ public class UsuarioSecurity extends Usuario implements UserDetails, Serializabl
 		setLogin(login);
 		setSenha(senha);
 	}
+	
+	private String newPassword;
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -29,6 +31,14 @@ public class UsuarioSecurity extends Usuario implements UserDetails, Serializabl
 	@Override
 	public String getPassword() {
 		return this.senha;
+	}
+	
+	public void setnewPassword(String newPassword) {
+		this.newPassword = newPassword;
+	}
+	
+	public String getNewPassword() {
+		return this.newPassword;
 	}
 
 	@Override

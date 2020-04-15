@@ -14,9 +14,11 @@ public class UsuarioService {
 	@Autowired
 	private UsuarioRepository repository;
 	
-	public Usuario insert(Usuario usuario) {
+	public Usuario insert(UsuarioSecurity usuarioSecurity) {
+		Usuario usuario = new Usuario();
 		usuario.setId(null);
-		usuario.setSenha(new BCryptPasswordEncoder().encode(usuario.getSenha()));
+		usuario.setLogin(usuarioSecurity.getLogin());
+		usuario.setSenha(new BCryptPasswordEncoder().encode(usuarioSecurity.getNewPassword()));
 		repository.save(usuario);
 		usuario = repository.save(usuario);
 		usuario.setSenha(null);

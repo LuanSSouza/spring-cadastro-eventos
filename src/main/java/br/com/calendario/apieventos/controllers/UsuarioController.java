@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.calendario.apieventos.models.AuthenticationRequest;
 import br.com.calendario.apieventos.models.AuthenticationResponse;
 import br.com.calendario.apieventos.models.Usuario;
+import br.com.calendario.apieventos.security.UsuarioSecurity;
 import br.com.calendario.apieventos.services.AuthService;
 import br.com.calendario.apieventos.services.UsuarioService;
 
@@ -35,7 +36,7 @@ public class UsuarioController {
 	}
 	
 	@PostMapping(value = "/criar")
-	public ResponseEntity<?> criarUsuário(@RequestBody Usuario usuario) throws AuthenticationException {
+	public ResponseEntity<?> criarUsuário(@RequestBody UsuarioSecurity usuario) throws AuthenticationException {
 		return ResponseEntity.ok(usuarioService.insert(usuario));
 	}
 }
