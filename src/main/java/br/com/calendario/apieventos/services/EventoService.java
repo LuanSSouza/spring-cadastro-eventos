@@ -22,7 +22,11 @@ public class EventoService {
 		evento.setCodigo(null);
 		evento.setUsuario(usuario);
 		return repository.save(evento);
-		
+	}
+	
+	public Evento update(Evento evento) throws ObjectNotFoundException {
+		Evento obj = findByCodigo(evento.getCodigo());
+		return repository.save(obj);
 	}
 	
 	public List<Evento> findByUsuario(Usuario usuario) throws ObjectNotFoundException {

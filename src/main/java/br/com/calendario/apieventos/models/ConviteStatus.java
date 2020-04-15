@@ -13,7 +13,12 @@ public class ConviteStatus {
 	private Integer id;
 	
 	private String status;
+	
+	public ConviteStatus() {}
 
+	public ConviteStatus(int id) {
+		this.id = id;
+	}
 
 	public Integer getId() {
 		return id;

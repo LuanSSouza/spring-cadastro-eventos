@@ -9,7 +9,7 @@ import br.com.calendario.apieventos.models.Evento;
 import br.com.calendario.apieventos.models.Usuario;
 
 @Transactional
-public interface EventoRepository extends CrudRepository<Evento, String>{
+public interface EventoRepository extends CrudRepository<Evento, String> {
 	
 	List<Evento> findByUsuario(Usuario usuario);
 	

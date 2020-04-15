@@ -14,6 +14,15 @@ public class ConviteCompositeKey implements Serializable {
 	
 	@ManyToOne
 	private Evento evento;
+	
+	
+
+	public ConviteCompositeKey() {}
+
+	public ConviteCompositeKey(Usuario usuario, Evento evento) {
+		this.usuario = usuario;
+		this.evento = evento;
+	}
 
 	public Usuario getUsuario() {
 		return usuario;
