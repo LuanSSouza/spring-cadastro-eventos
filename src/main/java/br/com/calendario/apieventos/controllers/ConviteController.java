@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -46,8 +47,10 @@ public class ConviteController {
 		return ResponseEntity.ok(conviteService.findByUsuario(usuario));
 	}
 	
-	@GetMapping("/evento")
-	public ResponseEntity<?> getByEvento(@RequestBody Evento evento) throws ObjectNotFoundException {
+	@GetMapping("/evento/{codigo}")
+	public ResponseEntity<?> getByEvento(@PathVariable int codigo) throws ObjectNotFoundException {
+		Evento evento = new Evento();
+		evento.setCodigo(codigo);
 		return ResponseEntity.ok(conviteService.findByEvento(evento));
 	}
 	

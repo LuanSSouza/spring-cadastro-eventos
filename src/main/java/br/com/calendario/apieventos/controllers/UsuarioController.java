@@ -1,5 +1,7 @@
 package br.com.calendario.apieventos.controllers;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.AuthenticationException;
@@ -42,7 +44,8 @@ public class UsuarioController {
 	}
 	
 	@GetMapping(value = "/all")
-	public ResponseEntity<?> getAll() throws AuthenticationException {
-		return ResponseEntity.ok(usuarioService.findAll());
+	public ResponseEntity<?> getAll(HttpServletRequest request) throws AuthenticationException {
+		Usuario usuario = new Usuario(authService.extractId(request));
+		return ResponseEntity.ok(usuarioService.findAll(usuario));
 	}
 }

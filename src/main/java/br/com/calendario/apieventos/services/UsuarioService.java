@@ -34,6 +34,10 @@ public class UsuarioService {
 		return repository.findAll();
 	}
 	
+	public Iterable<Usuario> findAll(Usuario usuario) {
+		return repository.findAll(usuario);
+	}
+	
 	public UsuarioSecurity findUsuarioSecurityByLogin(String login) {
 		Usuario usuario = repository.findByLogin(login);
 		return new UsuarioSecurity(usuario.getId(), usuario.getLogin(), usuario.getSenha());

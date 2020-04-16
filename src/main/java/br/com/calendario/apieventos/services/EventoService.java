@@ -37,6 +37,13 @@ public class EventoService {
 		if (eventos.isEmpty()) throw new ObjectNotFoundException("Nenhum evento encotrado");
 		return eventos;
 	}
+	
+	public List<Evento> findByUsuarioEventos(Usuario usuario) throws ObjectNotFoundException {
+		List<Evento> eventos = repository.findByUsuarioEventos(usuario);
+		if (eventos.isEmpty()) throw new ObjectNotFoundException("Nenhum evento encotrado");
+		return eventos;
+	}
+	
 	public Evento findByCodigo(int codigo) throws ObjectNotFoundException {
 		Evento evento = repository.findByCodigo(codigo);
 		if (evento == null) throw new ObjectNotFoundException("Evento não encotrado."); 

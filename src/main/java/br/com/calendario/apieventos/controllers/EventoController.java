@@ -49,6 +49,12 @@ public class EventoController {
 		return ResponseEntity.ok(eventoService.findByUsuario(usuario));
 	}
 	
+	@GetMapping("usuario")
+	public ResponseEntity<?> listarUsuarioEventos(HttpServletRequest request) throws ObjectNotFoundException {	
+		Usuario usuario = new Usuario(authService.extractId(request));
+		return ResponseEntity.ok(eventoService.findByUsuarioEventos(usuario));
+	}
+	
 	@GetMapping(value = "{codigo}")
 	public ResponseEntity<?> getByCodigo(HttpServletRequest request, @PathVariable int codigo) throws ObjectNotFoundException {
 		return ResponseEntity.ok(eventoService.findByCodigo(codigo));
